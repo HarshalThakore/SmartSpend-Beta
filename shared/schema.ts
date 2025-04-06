@@ -79,10 +79,18 @@ export const insertTransactionSchema = createInsertSchema(transactions)
         }
         return stringVal;
       }),
-    // Make sure categoryId is a number
-    categoryId: z.union([z.string(), z.number()]).transform(val => 
-      typeof val === 'string' ? parseInt(val, 10) : val
-    ),
+    // Properly validate categoryId
+    categoryId: z.union([z.string(), z.number()])
+      .transform((val) => {
+        if (val === null || val === undefined || val === '') {
+          throw new Error('Category is required');
+        }
+        const numVal = typeof val === 'string' ? parseInt(val, 10) : val;
+        if (isNaN(numVal)) {
+          throw new Error('Invalid category');
+        }
+        return numVal;
+      }),
   });
 
 // Budget table

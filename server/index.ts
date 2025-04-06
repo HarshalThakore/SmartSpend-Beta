@@ -58,11 +58,7 @@ app.use((req, res, next) => {
 
   // Use PORT environment variable if provided (e.g., by Azure), otherwise use 5000
   const port = process.env.PORT || 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
+  server.listen(port, "0.0.0.0", () => {
+    log(`Server running at http://0.0.0.0:${port}`);
   });
 })();

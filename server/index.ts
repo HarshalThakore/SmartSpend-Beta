@@ -3,6 +3,12 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Health check endpoint first, before any middleware
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

@@ -62,24 +62,24 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Always use port 5000 for consistency
-  const port = 5000;
+  // Use environment port or fallback to 5000
+  const port = process.env.PORT || 5000;
 
-  // Add health check endpoint first, before any other routes
+  // Health check endpoint for platform health monitoring
   app.get('/health', (req, res) => {
-    res.status(200).send('OK');
+    res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
   });
 
-  // Start server with improved error handling
+  // Start server with robust error handling
   server.listen(port, "0.0.0.0", () => {
     log(`Server running at http://0.0.0.0:${port}`);
-    // Signal that the server is ready
     if (process.send) {
       process.send('ready');
     }
   }).on('error', (err) => {
     log(`Server error: ${err.message}`);
-    process.exit(1);
+    // Give the process a moment to flush logs
+    setTimeout(() => process.exit(1), 100);
   });
 
   // Handle shutdown gracefully

@@ -126,11 +126,11 @@ export default function Transactions() {
       <div className="min-h-screen flex flex-col">
         <Navbar onMobileMenuToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
         {mobileMenuOpen && <MobileMenu />}
-        
+
         <div className="flex-grow flex items-center justify-center">
           <Loader2 className="h-12 w-12 animate-spin text-primary" />
         </div>
-        
+
         <Footer />
       </div>
     );
@@ -140,19 +140,61 @@ export default function Transactions() {
     <div className="min-h-screen flex flex-col">
       <Navbar onMobileMenuToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
       {mobileMenuOpen && <MobileMenu />}
-      
+
       <main className="flex-grow">
         <div className="bg-dashboard py-8 relative">
           <div className="container mx-auto px-4 relative z-1">
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-3xl md:text-4xl font-heading font-bold text-primary">Transactions</h1>
-              
+
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Transaction
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Transaction
+                    </Button>
+                    <Button variant="outline" onClick={() => document.getElementById('csvInput')?.click()}>
+                      <input
+                        id="csvInput"
+                        type="file"
+                        accept=".csv"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = async () => {
+                              const base64Data = (reader.result as string).split(',')[1];
+                              try {
+                                const res = await fetch('/api/transactions/upload-csv', {
+                                  method: 'POST',
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                  },
+                                  body: JSON.stringify({ csvData: base64Data }),
+                                });
+                                if (!res.ok) throw new Error('Upload failed');
+                                toast({
+                                  title: "Success",
+                                  description: "CSV file uploaded successfully",
+                                });
+                                queryClient.invalidateQueries({ queryKey: ["/api/transactions"] });
+                              } catch (error) {
+                                toast({
+                                  title: "Error",
+                                  description: "Failed to upload CSV file",
+                                  variant: "destructive",
+                                });
+                              }
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                      Upload CSV
+                    </Button>
+                  </div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -161,7 +203,7 @@ export default function Transactions() {
                       Enter the details of your transaction below.
                     </DialogDescription>
                   </DialogHeader>
-                  
+
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                       <FormField
@@ -177,7 +219,7 @@ export default function Transactions() {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="amount"
@@ -191,7 +233,7 @@ export default function Transactions() {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="date"
@@ -205,7 +247,7 @@ export default function Transactions() {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="categoryId"
@@ -233,7 +275,7 @@ export default function Transactions() {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="isIncome"
@@ -251,7 +293,7 @@ export default function Transactions() {
                           </FormItem>
                         )}
                       />
-                      
+
                       <DialogFooter>
                         <Button type="submit" disabled={createTransaction.isPending}>
                           {createTransaction.isPending ? (
@@ -269,7 +311,7 @@ export default function Transactions() {
                 </DialogContent>
               </Dialog>
             </div>
-            
+
             <div className="bg-white rounded-lg shadow-md p-6">
               {/* Filters Row */}
               <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -285,7 +327,7 @@ export default function Transactions() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                
+
                 <div className="flex gap-2">
                   <Select value={categoryFilter} onValueChange={setCategoryFilter}>
                     <SelectTrigger className="w-[180px]">
@@ -300,7 +342,7 @@ export default function Transactions() {
                       ))}
                     </SelectContent>
                   </Select>
-                  
+
                   <Select value={typeFilter} onValueChange={setTypeFilter}>
                     <SelectTrigger className="w-[150px]">
                       <SelectValue placeholder="Type" />
@@ -313,7 +355,7 @@ export default function Transactions() {
                   </Select>
                 </div>
               </div>
-              
+
               {/* Transactions Table */}
               <div className="overflow-x-auto">
                 <table className="min-w-full">
@@ -363,7 +405,7 @@ export default function Transactions() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

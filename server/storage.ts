@@ -1,4 +1,5 @@
 import { drizzle } from "drizzle-orm/node-postgres";
+import { sql } from "drizzle-orm";
 import pkg from 'pg';
 const { Pool } = pkg;
 import session from "express-session";

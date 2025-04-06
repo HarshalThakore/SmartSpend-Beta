@@ -22,7 +22,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/categories", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     
-    const categories = await storage.getCategories();
+    let categories = await storage.getCategories();
+    
+    // Create default categories if none exist
+    if (categories.length === 0) {
+      const defaultCategories = [
+        { name: "Housing", type: "fixed", color: "#FF5722" },
+        { name: "Food", type: "variable", color: "#4CAF50" },
+        { name: "Transportation", type: "variable", color: "#2196F3" },
+        { name: "Entertainment", type: "discretionary", color: "#9C27B0" },
+        { name: "Education", type: "fixed", color: "#FF9800" },
+        { name: "Healthcare", type: "variable", color: "#E91E63" },
+        { name: "Shopping", type: "discretionary", color: "#00BCD4" },
+        { name: "Income", type: "income", color: "#8BC34A" }
+      ];
+      
+      for (const category of defaultCategories) {
+        await storage.createCategory(category);
+      }
+      
+      categories = await storage.getCategories();
+    }
+    
     res.json(categories);
   });
   

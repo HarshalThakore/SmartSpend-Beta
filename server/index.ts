@@ -56,10 +56,10 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Use PORT environment variable if provided (e.g., by Azure), otherwise use 5000
-  const port = process.env.PORT || 5000;
+  // Always use port 5000 for consistency
+  const port = 5000;
 
-  // Add health check endpoint
+  // Add health check endpoint first, before any other routes
   app.get('/health', (req, res) => {
     res.status(200).send('OK');
   });

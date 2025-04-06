@@ -58,7 +58,29 @@ app.use((req, res, next) => {
 
   // Use PORT environment variable if provided (e.g., by Azure), otherwise use 5000
   const port = process.env.PORT || 5000;
+
+  // Add health check endpoint
+  app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+  });
+
+  // Start server with improved error handling
   server.listen(port, "0.0.0.0", () => {
     log(`Server running at http://0.0.0.0:${port}`);
+    // Signal that the server is ready
+    if (process.send) {
+      process.send('ready');
+    }
+  }).on('error', (err) => {
+    log(`Server error: ${err.message}`);
+    process.exit(1);
+  });
+
+  // Handle shutdown gracefully
+  process.on('SIGTERM', () => {
+    server.close(() => {
+      log('Server shutting down');
+      process.exit(0);
+    });
   });
 })();

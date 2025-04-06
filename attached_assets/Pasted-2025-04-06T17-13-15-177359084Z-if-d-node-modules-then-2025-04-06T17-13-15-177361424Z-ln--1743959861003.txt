@@ -1,0 +1,25 @@
+2025-04-06T17:13:15.177359084Z if [ -d /node_modules ]; then
+2025-04-06T17:13:15.177361424Z     ln -sfn /node_modules ./node_modules
+2025-04-06T17:13:15.177363883Z fi
+2025-04-06T17:13:15.177366280Z
+2025-04-06T17:13:15.177368594Z echo "Done."
+2025-04-06T17:13:15.177370982Z PATH="$PATH:/home/site/wwwroot" node dist/index.js
+2025-04-06T17:13:15.177373394Z Found tar.gz based node_modules.
+2025-04-06T17:13:15.177376335Z Removing existing modules directory from root...
+2025-04-06T17:13:15.207710181Z Extracting modules...
+2025-04-06T17:13:39.495Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 30.6165217 sec
+2025-04-06T17:13:56.509Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 47.6302768 sec
+2025-04-06T17:14:12.060Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 63.1808164 sec
+2025-04-06T17:14:28.498Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 79.6192691 sec
+2025-04-06T17:14:43.600Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 94.7212376 sec
+2025-04-06T17:15:02.610Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 113.7308512 sec
+2025-04-06T17:15:17.739Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 128.8599579 sec
+2025-04-06T17:15:32.884Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 144.0047808 sec
+2025-04-06T17:15:47.999Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 159.1204544 sec
+2025-04-06T17:16:03.187Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 174.3084308 sec
+2025-04-06T17:16:18.303Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 189.4244411 sec
+2025-04-06T17:16:33.412Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 204.5330797 sec
+2025-04-06T17:16:48.603Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_b45fbe34. Elapsed time = 219.7237717 sec
+2025-04-06T17:16:59.172Z ERROR - Container smartspend-webapp_1_b45fbe34 for site smartspend-webapp did not start within expected time limit. Elapsed time = 230.2930951 sec
+2025-04-06T17:16:59.199Z ERROR - Container smartspend-webapp_1_b45fbe34 didn't respond to HTTP pings on port: 5000, after 232.8104708 sec. Failing site start. See container logs for debugging.
+2025-04-06T17:17:00.117Z INFO  - Stopping site smartspend-webapp because it failed during startup.

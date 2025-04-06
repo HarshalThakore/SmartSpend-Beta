@@ -63,20 +63,27 @@ app.use((req, res, next) => {
   }
 
   // Use environment port or fallback to 5000
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT || process.env.WEBSITE_PORT || 5000;
 
   // Health check endpoint for platform health monitoring
   app.get('/health', (req, res) => {
     res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
   });
 
+  // Add Azure-specific logging
+  console.log(`Node Version: ${process.version}`);
+  console.log(`PORT: ${port}`);
+  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+
   // Start server with robust error handling
   server.listen(port, "0.0.0.0", () => {
+    console.log(`Server running at http://0.0.0.0:${port}`);
     log(`Server running at http://0.0.0.0:${port}`);
     if (process.send) {
       process.send('ready');
     }
   }).on('error', (err) => {
+    console.error(`Server error: ${err.message}`);
     log(`Server error: ${err.message}`);
     // Give the process a moment to flush logs
     setTimeout(() => process.exit(1), 100);

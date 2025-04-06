@@ -1,0 +1,24 @@
+2025-04-06T17:03:21.971320305Z PATH="$PATH:/home/site/wwwroot" node dist/index.js
+2025-04-06T17:03:21.974643518Z Found tar.gz based node_modules.
+2025-04-06T17:03:21.977183926Z Removing existing modules directory from root...
+2025-04-06T17:03:21.987249593Z Extracting modules...
+2025-04-06T17:03:11.367Z INFO  - Starting container for site
+2025-04-06T17:03:11.376Z INFO  - docker run -d --expose=5000 --name smartspend-webapp_1_c6415719 -e WEBSITE_USE_DIAGNOSTIC_SERVER=true -e PORT=5000 -e WEBSITE_SITE_NAME=smartspend-webapp -e WEBSITE_AUTH_ENABLED=False -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=smartspend-webapp-f2aff6h9cpfvegej.canadacentral-01.azurewebsites.net -e WEBSITE_INSTANCE_ID=d74269b73e2b4084a8800d28d4abe04cb25d4dac589e975f5bfb7ab3e673d98c appsvc/node:22-lts_20250303.1.tuxprod REDACTED
+2025-04-06T17:03:11.378Z INFO  - Logging is not enabled for this container.Please use https://aka.ms/linux-diagnostics to enable logging to see container logs here.
+2025-04-06T17:03:14.382Z INFO  - Initiating warmup request to container smartspend-webapp_1_c6415719 for site smartspend-webapp
+2025-04-06T17:03:45.665Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 31.2831052 sec
+2025-04-06T17:04:01.032Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 46.64944 sec
+2025-04-06T17:04:16.167Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 61.7842863 sec
+2025-04-06T17:04:31.279Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 76.8972005 sec
+2025-04-06T17:04:46.607Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 92.2248534 sec
+2025-04-06T17:05:01.738Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 107.3553543 sec
+2025-04-06T17:05:17.686Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 123.3033206 sec
+2025-04-06T17:05:32.853Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 138.4705197 sec
+2025-04-06T17:05:48.658Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 154.275797 sec
+2025-04-06T17:06:03.755Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 169.3731599 sec
+2025-04-06T17:06:19.300Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 184.9175266 sec
+2025-04-06T17:06:34.417Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 200.035058 sec
+2025-04-06T17:06:56.290Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_c6415719. Elapsed time = 221.9076204 sec
+2025-04-06T17:07:04.416Z ERROR - Container smartspend-webapp_1_c6415719 for site smartspend-webapp did not start within expected time limit. Elapsed time = 230.0341382 sec
+2025-04-06T17:07:04.437Z ERROR - Container smartspend-webapp_1_c6415719 didn't respond to HTTP pings on port: 5000, after 233.1931143 sec. Failing site start. See container logs for debugging.
+2025-04-06T17:07:04.478Z INFO  - Stopping site smartspend-webapp because it failed during startup.

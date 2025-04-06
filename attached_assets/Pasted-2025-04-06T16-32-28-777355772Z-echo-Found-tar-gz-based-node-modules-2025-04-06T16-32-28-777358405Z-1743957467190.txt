@@ -1,0 +1,37 @@
+2025-04-06T16:32:28.777355772Z echo Found tar.gz based node_modules.
+2025-04-06T16:32:28.777358405Z extractionCommand="tar -xzf node_modules.tar.gz -C /node_modules"
+2025-04-06T16:32:28.777370134Z echo "Removing existing modules directory from root..."
+2025-04-06T16:32:28.777373240Z rm -fr /node_modules
+2025-04-06T16:32:28.777375605Z mkdir -p /node_modules
+2025-04-06T16:32:28.777377917Z echo Extracting modules...
+2025-04-06T16:32:28.777380218Z $extractionCommand
+2025-04-06T16:32:28.777382669Z export NODE_PATH="/node_modules":$NODE_PATH
+2025-04-06T16:32:28.777385151Z export PATH=/node_modules/.bin:$PATH
+2025-04-06T16:32:28.777387686Z if [ -d node_modules ]; then
+2025-04-06T16:32:28.777390062Z     mv -f node_modules _del_node_modules || true
+2025-04-06T16:32:28.777392575Z fi
+2025-04-06T16:32:28.777394838Z
+2025-04-06T16:32:28.777397045Z if [ -d /node_modules ]; then
+2025-04-06T16:32:28.777399373Z     ln -sfn /node_modules ./node_modules
+2025-04-06T16:32:28.777401821Z fi
+2025-04-06T16:32:28.777404066Z
+2025-04-06T16:32:28.777406464Z echo "Done."
+2025-04-06T16:32:28.777408818Z npm start
+2025-04-06T16:32:28.795456628Z Found tar.gz based node_modules.
+2025-04-06T16:32:28.795475636Z Removing existing modules directory from root...
+2025-04-06T16:32:28.815377720Z Extracting modules...
+2025-04-06T16:33:21.592Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 61.3902012 sec
+2025-04-06T16:33:36.720Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 76.5184077 sec
+2025-04-06T16:33:51.842Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 91.6403163 sec
+2025-04-06T16:34:06.979Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 106.777882 sec
+2025-04-06T16:34:22.083Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 121.8816893 sec
+2025-04-06T16:34:39.050Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 138.8490812 sec
+2025-04-06T16:34:54.169Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 153.9672717 sec
+2025-04-06T16:35:09.303Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 169.1014102 sec
+2025-04-06T16:35:24.460Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 184.2589596 sec
+2025-04-06T16:35:40.122Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 199.920182 sec
+2025-04-06T16:35:55.224Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 215.0228779 sec
+2025-04-06T16:36:11.052Z INFO  - Waiting for response to warmup request for container smartspend-webapp_1_7fb11895. Elapsed time = 230.8511187 sec
+2025-04-06T16:36:11.094Z ERROR - Container smartspend-webapp_1_7fb11895 for site smartspend-webapp did not start within expected time limit. Elapsed time = 230.8930247 sec
+2025-04-06T16:36:11.114Z ERROR - Container smartspend-webapp_1_7fb11895 didn't respond to HTTP pings on port: 5000, after 232.621223 sec. Failing site start. See container logs for debugging.
+2025-04-06T16:36:11.129Z INFO  - Stopping site smartspend-webapp because it failed during startup.

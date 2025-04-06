@@ -1,5 +1,6 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import pkg from 'pg';
+const { Pool } = pkg;
 import session from "express-session";
 import createMemoryStore from "memorystore";
 import * as schema from "@shared/schema";

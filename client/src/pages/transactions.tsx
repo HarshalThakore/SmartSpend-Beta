@@ -147,14 +147,16 @@ export default function Transactions() {
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-3xl md:text-4xl font-heading font-bold text-primary">Transactions</h1>
 
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <div className="flex gap-2">
+              <div className="flex gap-2">
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
                     <Button>
                       <Plus className="h-4 w-4 mr-2" />
                       Add Transaction
                     </Button>
-                    <Button variant="outline" onClick={() => document.getElementById('csvInput')?.click()}>
+                  </DialogTrigger>
+                </Dialog>
+                <Button variant="outline" onClick={() => document.getElementById('csvInput')?.click()}>
                       <input
                         id="csvInput"
                         type="file"

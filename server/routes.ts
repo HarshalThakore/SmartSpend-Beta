@@ -792,12 +792,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const csvBuffer = Buffer.from(req.body.csvData, 'base64');
       const userId = req.user!.id;
 
-      // Save to mapped storage path
+      const csvString = csvBuffer.toString();
+      const records = await new Promise<any[]>((resolve, reject) => {
+        const results: any[] = [];
+        const parser = parse(csvString, {
+          columns: true,
+          skip_empty_lines: true
+        });
+        
+        parser.on('readable', function() {
+          let record;
+          while (record = parser.read()) {
+            results.push(record);
+          }
+        });
+        
+        parser.on('error', reject);
+        parser.on('end', () => resolve(results));
+      });
+
+      // Save file for record keeping
       const filename = `transactions-${userId}-${Date.now()}.csv`;
       const filePath = `/data/csv/${filename}`;
       await fs.promises.writeFile(filePath, csvBuffer);
 
-      res.status(201).json({ message: "CSV uploaded successfully" });
+      // Create transactions
+      for (const record of records) {
+        const transaction = {
+          userId,
+          amount: parseFloat(record.amount),
+          date: record.date,
+          description: record.description,
+          categoryId: parseInt(record.categoryId),
+          isIncome: record.isIncome === 'true'
+        };
+        
+        await storage.createTransaction(transaction);
+      }
+
+      res.status(201).json({ message: "CSV uploaded and transactions created successfully" });
     } catch (error) {
       console.error("Error uploading CSV:", error);
       res.status(500).json({ error: "Failed to upload CSV" });

@@ -811,9 +811,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         parser.on('end', () => resolve(results));
       });
 
-      // Save file for record keeping
+      // Ensure directory exists and save file
+      const csvDir = '/data/csv';
+      await fs.promises.mkdir(csvDir, { recursive: true });
+      
       const filename = `transactions-${userId}-${Date.now()}.csv`;
-      const filePath = `/data/csv/${filename}`;
+      const filePath = `${csvDir}/${filename}`;
       await fs.promises.writeFile(filePath, csvBuffer);
 
       // Create transactions

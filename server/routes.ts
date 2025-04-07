@@ -12,6 +12,9 @@ import {
   insertAlertSchema
 } from "@shared/schema";
 import * as fs from 'fs'; // Import the fs module
+import { parse } from 'csv-parse/sync'; //Corrected import statement
+import { mkdir } from 'fs/promises'; //Already correctly imported
+
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Set up authentication routes
@@ -793,28 +796,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.user!.id;
 
       const csvString = csvBuffer.toString();
-      const records = await new Promise<any[]>((resolve, reject) => {
-        const results: any[] = [];
-        const parser = parse(csvString, {
-          columns: true,
-          skip_empty_lines: true
-        });
-        
-        parser.on('readable', function() {
-          let record;
-          while (record = parser.read()) {
-            results.push(record);
-          }
-        });
-        
-        parser.on('error', reject);
-        parser.on('end', () => resolve(results));
+      const records = parse(csvString, {
+        columns: true,
+        skip_empty_lines: true
       });
 
       // Ensure directory exists and save file
       const csvDir = '/data/csv';
       await fs.promises.mkdir(csvDir, { recursive: true });
-      
+
       const filename = `transactions-${userId}-${Date.now()}.csv`;
       const filePath = `${csvDir}/${filename}`;
       await fs.promises.writeFile(filePath, csvBuffer);
@@ -829,7 +819,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           categoryId: parseInt(record.categoryId),
           isIncome: record.isIncome === 'true'
         };
-        
+
         await storage.createTransaction(transaction);
       }
 

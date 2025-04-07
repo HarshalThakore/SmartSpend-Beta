@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Navbar } from "@/components/layout/navbar";
@@ -126,11 +127,9 @@ export default function Transactions() {
       <div className="min-h-screen flex flex-col">
         <Navbar onMobileMenuToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
         {mobileMenuOpen && <MobileMenu />}
-
         <div className="flex-grow flex items-center justify-center">
           <Loader2 className="h-12 w-12 animate-spin text-primary" />
         </div>
-
         <Footer />
       </div>
     );
@@ -145,7 +144,9 @@ export default function Transactions() {
         <div className="bg-dashboard py-8 relative">
           <div className="container mx-auto px-4 relative z-1">
             <div className="flex justify-between items-center mb-6">
-              <h1 className="text-3xl md:text-4xl font-heading font-bold text-primary">Transactions</h1>
+              <h1 className="text-3xl md:text-4xl font-heading font-bold text-primary">
+                Transactions
+              </h1>
 
               <div className="flex gap-2">
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -165,11 +166,111 @@ export default function Transactions() {
 
                     <Form {...form}>
                       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        {/* Form fields remain the same */}
+                        <FormField
+                          control={form.control}
+                          name="description"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Description</FormLabel>
+                              <FormControl>
+                                <Input placeholder="e.g., Grocery shopping" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="amount"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Amount</FormLabel>
+                              <FormControl>
+                                <Input type="number" placeholder="0.00" step="0.01" min="0" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="date"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Date</FormLabel>
+                              <FormControl>
+                                <Input type="date" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="categoryId"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Category</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a category" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {categories?.map((category) => (
+                                    <SelectItem key={category.id} value={category.id.toString()}>
+                                      {category.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="isIncome"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <input
+                                  type="checkbox"
+                                  className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                                  checked={field.value}
+                                  onChange={field.onChange}
+                                />
+                              </FormControl>
+                              <FormLabel className="font-normal">This is income</FormLabel>
+                            </FormItem>
+                          )}
+                        />
+
+                        <DialogFooter>
+                          <Button type="submit" disabled={createTransaction.isPending}>
+                            {createTransaction.isPending ? (
+                              <>
+                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                Saving...
+                              </>
+                            ) : (
+                              "Save Transaction"
+                            )}
+                          </Button>
+                        </DialogFooter>
                       </form>
                     </Form>
                   </DialogContent>
                 </Dialog>
+
                 <Button variant="outline" onClick={() => document.getElementById('csvInput')?.click()}>
                   <input
                     id="csvInput"
@@ -211,120 +312,6 @@ export default function Transactions() {
                   Upload CSV
                 </Button>
               </div>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Add New Transaction</DialogTitle>
-                    <DialogDescription>
-                      Enter the details of your transaction below.
-                    </DialogDescription>
-                  </DialogHeader>
-
-                  <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="description"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                              <Input placeholder="e.g., Grocery shopping" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="amount"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Amount</FormLabel>
-                            <FormControl>
-                              <Input type="number" placeholder="0.00" step="0.01" min="0" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="date"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Date</FormLabel>
-                            <FormControl>
-                              <Input type="date" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="categoryId"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Category</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select a category" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {categories?.map((category) => (
-                                  <SelectItem key={category.id} value={category.id.toString()}>
-                                    {category.name}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="isIncome"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <input
-                                type="checkbox"
-                                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                                checked={field.value}
-                                onChange={field.onChange}
-                              />
-                            </FormControl>
-                            <FormLabel className="font-normal">This is income</FormLabel>
-                          </FormItem>
-                        )}
-                      />
-
-                      <DialogFooter>
-                        <Button type="submit" disabled={createTransaction.isPending}>
-                          {createTransaction.isPending ? (
-                            <>
-                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                              Saving...
-                            </>
-                          ) : (
-                            "Save Transaction"
-                          )}
-                        </Button>
-                      </DialogFooter>
-                    </form>
-                  </Form>
-                </DialogContent>
-              </Dialog>
             </div>
 
             <div className="bg-white rounded-lg shadow-md p-6">

@@ -155,49 +155,62 @@ export default function Transactions() {
                       Add Transaction
                     </Button>
                   </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New Transaction</DialogTitle>
+                      <DialogDescription>
+                        Enter the details of your transaction below.
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        {/* Form fields remain the same */}
+                      </form>
+                    </Form>
+                  </DialogContent>
                 </Dialog>
                 <Button variant="outline" onClick={() => document.getElementById('csvInput')?.click()}>
-                      <input
-                        id="csvInput"
-                        type="file"
-                        accept=".csv"
-                        className="hidden"
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            const reader = new FileReader();
-                            reader.onload = async () => {
-                              const base64Data = (reader.result as string).split(',')[1];
-                              try {
-                                const res = await fetch('/api/transactions/upload-csv', {
-                                  method: 'POST',
-                                  headers: {
-                                    'Content-Type': 'application/json',
-                                  },
-                                  body: JSON.stringify({ csvData: base64Data }),
-                                });
-                                if (!res.ok) throw new Error('Upload failed');
-                                toast({
-                                  title: "Success",
-                                  description: "CSV file uploaded successfully",
-                                });
-                                queryClient.invalidateQueries({ queryKey: ["/api/transactions"] });
-                              } catch (error) {
-                                toast({
-                                  title: "Error",
-                                  description: "Failed to upload CSV file",
-                                  variant: "destructive",
-                                });
-                              }
-                            };
-                            reader.readAsDataURL(file);
+                  <input
+                    id="csvInput"
+                    type="file"
+                    accept=".csv"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = async () => {
+                          const base64Data = (reader.result as string).split(',')[1];
+                          try {
+                            const res = await fetch('/api/transactions/upload-csv', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({ csvData: base64Data }),
+                            });
+                            if (!res.ok) throw new Error('Upload failed');
+                            toast({
+                              title: "Success",
+                              description: "CSV file uploaded successfully",
+                            });
+                            queryClient.invalidateQueries({ queryKey: ["/api/transactions"] });
+                          } catch (error) {
+                            toast({
+                              title: "Error",
+                              description: "Failed to upload CSV file",
+                              variant: "destructive",
+                            });
                           }
-                        }}
-                      />
-                      Upload CSV
-                    </Button>
-                  </div>
-                </DialogTrigger>
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                  Upload CSV
+                </Button>
+              </div>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add New Transaction</DialogTitle>

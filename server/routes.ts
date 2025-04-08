@@ -796,10 +796,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = req.user!.id;
 
       const csvString = csvBuffer.toString();
+      
+      // Validate CSV structure
       const records = parse(csvString, {
         columns: true,
-        skip_empty_lines: true
+        skip_empty_lines: true,
+        trim: true,
+        cast: true
       });
+
+      if (!records || records.length === 0) {
+        throw new Error("CSV file is empty or invalid");
+      }
+
+      // Validate required columns
+      const requiredColumns = ['amount', 'date', 'description', 'categoryId', 'isIncome'];
+      const csvColumns = Object.keys(records[0]);
+      const missingColumns = requiredColumns.filter(col => !csvColumns.includes(col));
+
+      if (missingColumns.length > 0) {
+        throw new Error(`Missing required columns: ${missingColumns.join(', ')}`);
+      }
 
       // Ensure directory exists and save file
       const csvDir = '/data/csv';
@@ -826,7 +843,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json({ message: "CSV uploaded and transactions created successfully" });
     } catch (error) {
       console.error("Error uploading CSV:", error);
-      res.status(500).json({ error: "Failed to upload CSV" });
+      const errorMessage = error instanceof Error ? error.message : "Failed to upload CSV";
+      res.status(400).json({ error: errorMessage });
     }
   });
 

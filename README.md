@@ -104,6 +104,32 @@ The application will be available at `http://0.0.0.0:5000`
 4. Push to the branch
 5. Open a pull request
 
+## Screenshots
+
+### Login Page
+![Login Page](./docs/screenshots/login.png)
+*Secure authentication with email and password*
+
+### Dashboard
+![Dashboard](./docs/screenshots/dashboard.png)
+*Overview of finances with recent transactions and budget tracking*
+
+### Transactions
+![Transactions](./docs/screenshots/transactions.png)
+*Detailed transaction history with filtering and CSV import*
+
+### Budget Management
+![Budget](./docs/screenshots/budget.png)
+*Set and track category-wise budgets*
+
+### Community Forum
+![Community](./docs/screenshots/community.png)
+*Connect with other students and share financial tips*
+
+### Student Deals
+![Deals](./docs/screenshots/deals.png)
+*Access exclusive student deals and offers*
+
 ## License
 
 MIT License

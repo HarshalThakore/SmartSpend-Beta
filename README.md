@@ -1,7 +1,9 @@
 
 # Smart Spend - International Student Finance Management System
 
-Smart Spend is a comprehensive financial management application designed specifically for international students. It helps track expenses, manage budgets, and connect with the student community.
+> Built with Replit, Deployed on Azure WebApp
+
+Smart Spend is a comprehensive financial management application designed specifically for international students. It helps track expenses, manage budgets, and connect with the student community. This project was developed using Replit's collaborative development environment to learn about modern web application development, system integrations, and cloud deployment practices using Azure WebApp.
 
 ## Features
 
@@ -22,6 +24,18 @@ Smart Spend is a comprehensive financial management application designed specifi
   - Profile management
   - Multi-factor authentication support
   - Password reset functionality
+
+## Development & Deployment
+
+- **Development Environment**
+  - Built on Replit's collaborative IDE
+  - Real-time development and testing
+  - Integrated version control
+
+- **Cloud Deployment**
+  - Deployed on Azure WebApp
+  - Production-grade hosting
+  - Automated deployment pipeline
 
 ## Tech Stack
 

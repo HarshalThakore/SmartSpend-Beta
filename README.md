@@ -144,6 +144,3 @@ The application will be available at `http://0.0.0.0:5000`
 ![Deals](./docs/screenshots/deals.png)
 *Access exclusive student deals and offers*
 
-## License
-
-MIT License
